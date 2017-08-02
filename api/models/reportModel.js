@@ -17,9 +17,6 @@ var ReportSchema = new Schema({
         description: {
             type: String
         },
-        id: {
-            type: ObjectId()
-        },
         latitude: {
             type: String
         },
