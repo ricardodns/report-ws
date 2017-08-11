@@ -86,7 +86,7 @@ exports.update_a_user = function(req, user) {
 };
 
 exports.delete_a_user = function(req, res) {
-  Report.remove({
+  User.remove({
     _id: req.params.userId
   }, function(err, user) {
     if (err)
