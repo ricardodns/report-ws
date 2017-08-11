@@ -98,7 +98,7 @@ exports.delete_a_user = function(req, res) {
 exports.authenticate = function(req, res) {
 
   // find the user
-  User.findById(req.params._id, function(err, user) {
+  User.find({"email":req.params.email}, function(err, user) {
 
     if (err) throw err;
 
