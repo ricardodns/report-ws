@@ -4,6 +4,9 @@ var Schema = mongoose.Schema;
 
 
 var UserSchema = new Schema({
+        userId: {
+            type: Schema.Types.ObjectId
+        },
         email: {
             type: String
         },

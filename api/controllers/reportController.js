@@ -72,7 +72,7 @@ exports.list_all_users = function(req, res) {
 exports.authenticate = function(req, res) {
 
   // find the user
-  User.findById(req.params._id, function(err, user) {
+  User.findById(req.params.id, function(err, user) {
 
     if (err) throw err;
 
