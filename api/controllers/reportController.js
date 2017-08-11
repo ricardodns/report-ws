@@ -33,7 +33,7 @@ exports.read_a_report = function(req, res) {
 };
 
 exports.update_a_report = function(req, report) {
-  Report.findOneAndUpdate({_id: req.params.taskId}, req.body, { new: true }, function(err, report) {
+  Report.findOneAndUpdate({_id: req.params._id}, req.body, { new: true }, function(err, report) {
     if (err)
       res.send(err);
     res.json(report);
@@ -42,7 +42,7 @@ exports.update_a_report = function(req, report) {
 
 exports.delete_a_report = function(req, res) {
   Report.remove({
-    _id: req.params.reportId
+    _id: req.params.taskId
   }, function(err, report) {
     if (err)
       res.send(err);
@@ -72,7 +72,7 @@ exports.list_all_users = function(req, res) {
 exports.authenticate = function(req, res) {
 
   // find the user
-  User.findById(req.params.reportId, function(err, user) {
+  User.findById(req.params._id, function(err, user) {
 
     if (err) throw err;
 
