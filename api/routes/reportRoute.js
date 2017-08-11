@@ -16,10 +16,13 @@ module.exports = function(app) {
 
   app.route('/users')
   	.get(reports.list_all_users)
-  	.post(reports.create_a_user)
+  	.post(reports.create_a_user);
 
+  app.route('/users/:userId').get(reports.read_a_user)
+  	.put(reports.update_a_user)
+  	.delete(reports.delete_a_user);
 
   app.route('/authenticate')
-    .post(reports.authenticate)
+    .post(reports.authenticate);
 
 };

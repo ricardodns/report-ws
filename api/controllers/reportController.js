@@ -42,7 +42,7 @@ exports.update_a_report = function(req, report) {
 
 exports.delete_a_report = function(req, res) {
   Report.remove({
-    _id: req.params.taskId
+    _id: req.params.reportId
   }, function(err, report) {
     if (err)
       res.send(err);
@@ -69,10 +69,36 @@ exports.list_all_users = function(req, res) {
   });
 };
 
+exports.read_a_user = function(req, res) {
+  User.findById(req.params.userId, function(err, user) {
+    if (err)
+      res.send(err);
+    res.json(user);
+  });
+};
+
+exports.update_a_users = function(req, user) {
+  User.findOneAndUpdate({_id: req.params._id}, req.body, { new: true }, function(err, user) {
+    if (err)
+      res.send(err);
+    res.json(user);
+  });
+};
+
+exports.delete_a_user = function(req, res) {
+  Report.remove({
+    _id: req.params.userId
+  }, function(err, user) {
+    if (err)
+      res.send(err);
+    res.json({ message: 'Report successfully deleted' });
+  });
+};
+
 exports.authenticate = function(req, res) {
 
   // find the user
-  User.findById(req.params.id, function(err, user) {
+  User.findById(req.params._id, function(err, user) {
 
     if (err) throw err;
 
