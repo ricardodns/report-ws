@@ -19,6 +19,7 @@ module.exports = function(app) {
   	.post(reports.create_a_user)
 
 
-  app.route('/authenticate',)
+  app.route('/authenticate')
+    .post(reports.authenticate)
 
 };
