@@ -77,7 +77,7 @@ exports.read_a_user = function(req, res) {
   });
 };
 
-exports.update_a_users = function(req, user) {
+exports.update_a_user = function(req, user) {
   User.findOneAndUpdate({_id: req.params._id}, req.body, { new: true }, function(err, user) {
     if (err)
       res.send(err);
