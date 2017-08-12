@@ -4,6 +4,8 @@ var express = require('express'),
   mongoose = require('mongoose'),
   Report = require('./api/models/reportModel'),
   User = require('./api/models/userModel'),
+  jwt = require('jsonwebtoken'),
+  config = require('./config'),
   bodyParser = require('body-parser');
 
 var uristring =
@@ -19,6 +21,8 @@ mongoose.connect(uristring, function (err, res) {
     console.log ('Succeeded connected to: ' + uristring);
   }
 });
+
+app.set('superSecret', config.secret);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
