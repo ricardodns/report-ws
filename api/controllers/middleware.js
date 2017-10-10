@@ -2,7 +2,7 @@
 
 var jwt = require('jsonwebtoken');
 
-exports.auth = function(req, res) {
+exports.auth = function(req, res, next) {
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
 	if (token) {
@@ -14,7 +14,7 @@ exports.auth = function(req, res) {
       } else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
-        return true;
+        next();
       }
     });
 
@@ -26,7 +26,5 @@ exports.auth = function(req, res) {
         success: false, 
         message: 'No token provided.' 
     });
-    return false;
-
   }
 }

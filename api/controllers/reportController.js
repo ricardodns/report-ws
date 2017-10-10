@@ -51,13 +51,12 @@ var mongoose = require('mongoose'),
         }
  */
 
-exports.list_all_reports = function(req, res) {
-    auth.auth(req, res);
+exports.list_all_reports = function(req, res, next) {
     Report.find({}, function(err, report) {
       try{
         if (err)
          res.send(err);
-        res.json(report);
+        res.status(200).json(report);
       }catch(err){
 
       }
@@ -113,13 +112,13 @@ exports.list_all_reports = function(req, res) {
         }
  */
 
-exports.create_a_report = function(req, res) {
-  auth.auth(req, res);
+exports.create_a_report = function(req, res, next) {
+  
   var new_report = new Report(req.body);
   new_report.save(function(err, report) {
     if (err)
       res.send(err);
-    res.json(report);
+    res.status(200).json(report);
   });
 };
 
@@ -162,13 +161,13 @@ exports.create_a_report = function(req, res) {
  */
 
 
-exports.read_a_report = function(req, res) {
-  auth.auth(req, res);
+exports.read_a_report = function(req, res, next) {
+  
   try{
     Report.findById(req.params.reportId, function(err, report) {
       if (err)
         res.send(err);
-      res.json(report);
+      res.status(200).json(report);
     });
   }catch(err){}
 };
@@ -200,13 +199,13 @@ exports.read_a_report = function(req, res) {
         }
  */
 
-exports.update_a_report = function(req, res) {
-  auth.auth(req, res);
+exports.update_a_report = function(req, res, next) {
+  
   try{
     Report.findOneAndUpdate({_id: req.params._id}, req.body, { new: true }, function(err, report) {
       if (err)
         res.send(err);
-      res.json(report);
+      res.status(200).json(report);
     });
   }catch(err){}
 };
@@ -228,15 +227,15 @@ exports.update_a_report = function(req, res) {
         }
  */
 
-exports.delete_a_report = function(req, res) {
-  auth.auth(req, res);
+exports.delete_a_report = function(req, res, next) {
+  
   try{
     Report.remove({
       _id: req.params.reportId
     }, function(err, report) {
       if (err)
         res.send(err);
-      res.json({ message: 'Report successfully deleted' });
+      res.status(200).json({ message: 'Report successfully deleted' });
     });
   }catch(err){}
 };
@@ -285,14 +284,14 @@ exports.delete_a_report = function(req, res) {
         }
  */
 
-exports.create_a_user = function(req, res) {
-  auth.auth(req, res);
+exports.create_a_user = function(req, res, next) {
+  
   try{
     var new_user = new User(req.body);
     new_user.save(function(err, user) {
       if (err)
         res.send(err);
-      res.json(user);
+      res.status(200).json(user);
     });
   }catch(err){}
 };
@@ -331,13 +330,13 @@ exports.create_a_user = function(req, res) {
         }
  */
 
-exports.list_all_users = function(req, res) {
-  auth.auth(req, res);
+exports.list_all_users = function(req, res, next) {
+  
   try{
     User.find({}, function(err, user) {
       if (err)
         res.send(err);
-      res.json(user);
+      res.status(200).json(user);
     });
   }catch(err){}
 };
@@ -375,13 +374,13 @@ exports.list_all_users = function(req, res) {
         }
  */
 
-exports.read_a_user = function(req, res) {
-  auth.auth(req, res);
+exports.read_a_user = function(req, res, next) {
+  
   try{
     User.findById(req.params.userId, function(err, user) {
       if (err)
         res.send(err);
-      res.json(user);
+      res.status(200).json(user);
     });
   }catch(err){}
 };
@@ -428,13 +427,13 @@ exports.read_a_user = function(req, res) {
  */
 
 
-exports.update_a_user = function(req, res) {
-  auth.auth(req, res);
+exports.update_a_user = function(req, res, next) {
+  
   try{
     User.findOneAndUpdate({_id: req.params._id}, req.body, { new: true }, function(err, user) {
       if (err)
         res.send(err);
-      res.json(user);
+      res.status(200).json(user);
     });
   }catch(err){}
 };
@@ -466,15 +465,15 @@ exports.update_a_user = function(req, res) {
         }
  */
 
-exports.delete_a_user = function(req, res) {
-  auth.auth(req, res);
+exports.delete_a_user = function(req, res, next) {
+  
   try{
     User.remove({
       _id: req.params.userId
     }, function(err, user) {
       if (err)
         res.send(err);
-      res.json({ message: 'Report successfully deleted' });
+      res.status(200).json({ message: 'Report successfully deleted' });
     });
   }catch(err){}
 };
@@ -506,21 +505,23 @@ exports.delete_a_user = function(req, res) {
         }
  */
 
-exports.authenticate = function(req, res) {
+exports.authenticate = function(req, res, next) {
 
   // find the user
   User.findById(req.body._id, function(err, user) {
 
-    if (err)
-      res.send(err);
+    if (err){
+      // res.send(err);
+      // next();
+    }
 
     if (!user) {
-      res.json({ success: false, message: 'Authentication failed. User not found.' });
+      res.status(401).json({ success: false, message: 'Authentication failed. User not found.' });
     } else if (user) {
 
       // check if password matches
       if (user.password != req.body.password) {
-        res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+        res.status(401).json({ success: false, message: 'Authentication failed. Wrong password.' });
       } else {
 
         // if user is found and password is right
@@ -530,7 +531,7 @@ exports.authenticate = function(req, res) {
         });
 
         // return the information including token as JSON
-        res.json({
+        res.status(200).json({
           success: true,
           message: 'Enjoy your token!',
           token: token
