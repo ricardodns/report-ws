@@ -332,7 +332,7 @@ exports.create_a_user = function(req, res) {
  */
 
 exports.list_all_users = function(req, res) {
-  //auth.auth(req, res);
+  auth.auth(req, res);
   try{
     User.find({}, function(err, user) {
       if (err)
