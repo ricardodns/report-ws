@@ -30,7 +30,7 @@ var ReportSchema = new Schema({
             type: Number
         },
         ownerId: {
-            type: Number
+            type: String
         },
         province: {
             type: String
