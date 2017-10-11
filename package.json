@@ -7,6 +7,7 @@
     "node": "6.11.1"
   },
   "scripts": {
+    "apidocs": "apidoc -i api/controllers/ -o public/apidocs -t node_modules/apidocs-template/template/",
     "start": "node server.js"
   },
   "author": "",
@@ -15,6 +16,7 @@
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "jsonwebtoken": "^7.4.2",
-    "mongoose": "^4.11.5"
+    "mongoose": "^4.11.5",
+    "apidocs-template": "git://github.com/EvandroViva/apidocjs_template.git"
   }
 }
