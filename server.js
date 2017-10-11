@@ -6,6 +6,7 @@ var express = require('express'),
   User = require('./api/models/userModel'),
   jwt = require('jsonwebtoken'),
   config = require('./config'),
+  path = require('path'),
   bodyParser = require('body-parser');
 
 var uristring =
@@ -22,14 +23,10 @@ mongoose.connect(uristring, function (err, res) {
   }
 });
 
-app.set('superSecret', config.secret);
+// app.set('superSecret', config.secret);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-app.get('/test', function(req, res) { res.json({data : 'hello'});})
-
-
 
 
 var routes = require('./api/routes/reportRoute');
